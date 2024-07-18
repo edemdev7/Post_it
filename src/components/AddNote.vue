@@ -29,7 +29,7 @@
           title: this.title,
           content: [this.content],
         };
-        fetch('http://62.72.5.95:1999/notes', {
+        fetch('/api/notes', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -33,7 +33,7 @@ export default {
   methods: {
     fetchNote() {
       let id = this.$route.params.id;
-      fetch(`http://62.72.5.95:1999/notes/${id}`)
+      fetch(`/api/notes/${id}`)
         .then(response => response.json())
         .then(data => {
           this.note = data;

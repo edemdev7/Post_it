@@ -46,7 +46,7 @@ export default {
     },
     deleteNote() {
       let id = this.$route.params.id;
-      fetch(`http://62.72.5.95:1999/notes/${id}`, {
+      fetch(`/api/notes/${id}`, {
         method: 'DELETE'
       })
         .then(() => {

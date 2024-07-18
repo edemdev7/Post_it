@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     fetchNotes() {
-      fetch('http://62.72.5.95:1999/notes')
+      fetch('/api/notes')
         .then(response => response.json())
         .then(data => {
           this.notes = data.notes;
