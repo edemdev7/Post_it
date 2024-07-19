@@ -1,27 +1,22 @@
 <template>
-  <div class="bg-gray-900 min-h-screen">
+  <div class="bg-gray-900 min-h-screen text-white">
     <Navbar />
     <div class="flex justify-center items-center min-h-screen">
       <Loader :loading="loading" />
       <div v-if="!loading" class="container mx-auto w-screen">
         <h1 class="text-3xl font-bold mb-8 text-center text-gray-100">Liste des Post-it</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto">
-          <div v-for="note in paginatedNotes" :key="note._id" :style="getRandomBackgroundStyle()" class="  bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 h-42 w-96  relative">
+          <div v-for="note in paginatedNotes" :key="note._id" :class="getRandomBackgroundStyle()" class="shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 h-42 w-96 relative text-white">
             <router-link :to="'/note/' + note._id" class="block text-2xl font-semibold text-blue-600 hover:underline mb-4">
-              {{ note.title.slice(0, 40) + "..." }}
+              {{ note.title.slice(0, 20) + "..." }}
             </router-link>
-            <p class="text-gray-700 overflow-hidden">{{ note.content[0].slice(0, 180) + "..." }}</p>
+            <p class="text-white overflow-hidden">{{ note.content[0].slice(0, 180) + "..." }}</p>
             <button @click="deleteNote(note._id)" class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
           </div>
         </div>
         <div class="mt-8 text-center">
           <button @click="prevPage" :disabled="currentPage === 1" class="mx-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50">Précédent</button>
           <button @click="nextPage" :disabled="currentPage === totalPages" class="mx-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 disabled:opacity-50">Suivant</button>
-        </div>
-        <div class="mt-8 text-center">
-          <router-link to="/add" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition-colors">
-            Ajouter un nouveau Post-it
-          </router-link>
         </div>
       </div>
     </div>
@@ -89,11 +84,8 @@ export default {
         });
     },
     getRandomBackgroundStyle() {
-      const colors = ['bg-blue-200', 'bg-orange-200', 'bg-green-200', 'bg-gray-900'];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      return {
-        backgroundColor: randomColor
-      };
+      const colors = ['bg-yellow-500', 'bg-orange-500', 'bg-green-500', 'bg-gray-500'];
+      return colors[Math.floor(Math.random() * colors.length)];
     }
   },
   components: {
@@ -104,7 +96,4 @@ export default {
 </script>
 
 <style scoped>
-.clip-polygon {
-  clip-path: polygon(100% 0%, 100% 50%, 50% 100%, 0% 50%);
-}
 </style>

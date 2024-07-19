@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Notes from '@/components/NotesPost.vue';
 import Note from '@/components/NotePost.vue';
-import AddNote from '@/components/AddNote.vue';
 import EditNote from '@/components/EditNote.vue';
 
 const router = createRouter({
@@ -16,11 +15,6 @@ const router = createRouter({
       path: '/note/:id',
       name: 'Note',
       component: Note
-    },
-    {
-      path: '/add',
-      name: 'AddNote',
-      component: AddNote
     },
     {
       path: '/edit/:id',
