@@ -11,7 +11,7 @@
               {{ note.title.slice(0, 20) + "..." }}
             </router-link>
             <p class="text-white overflow-hidden">{{ note.content[0].slice(0, 180) + "..." }}</p>
-            <button @click="deleteNote(note._id)" class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
+            <button @click="confirmDelete(note._id)" class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
           </div>
         </div>
         <div class="mt-8 text-center">
@@ -21,6 +21,18 @@
       </div>
     </div>
   </div>
+   <!-- Modale de confirmation -->
+   <div v-if="showConfirmModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class=" p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-4">Confirmation</h2>
+        <p>Êtes-vous sûr de vouloir supprimer ce post-it ?</p>
+        <div class="flex justify-end mt-4">
+          <button @click="showConfirmModal = false" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600 transition-colors">Annuler</button>
+          <button @click="confirmDeleteNote" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  
 </template>
 
 <script>
@@ -33,7 +45,10 @@ export default {
       notes: [],
       loading: true,
       currentPage: 1,
-      notesPerPage: 12
+      notesPerPage: 12,
+      showConfirmModal: false,
+      noteToDelete: null,
+      actionInProgress: false,  
     };
   },
   computed: {
@@ -48,19 +63,28 @@ export default {
   },
   created() {
     this.fetchNotes();
+    this.setupAutoRefresh();
   },
   methods: {
     fetchNotes() {
-      fetch('https://post-it.epi-bluelock.bj/notes')
-        .then(response => response.json())
-        .then(data => {
-          this.notes = data.notes;
-          this.loading = false;
-        })
-        .catch(error => {
-          console.error('Error fetching notes:', error);
-          this.loading = false;
-        });
+      if (!this.actionInProgress) {  
+        this.loading = true;
+        fetch('https://post-it.epi-bluelock.bj/notes')
+          .then(response => response.json())
+          .then(data => {
+            this.notes = data.notes;
+            this.loading = false;
+          })
+          .catch(error => {
+            console.error('Error fetching notes:', error);
+            this.loading = false;
+          });
+      }
+    },
+    setupAutoRefresh() {
+      setInterval(() => {
+        this.fetchNotes();
+      }, 5000);
     },
     prevPage() {
       if (this.currentPage > 1) {
@@ -72,16 +96,26 @@ export default {
         this.currentPage++;
       }
     },
-    deleteNote(id) {
-      fetch(`https://post-it.epi-bluelock.bj/notes/${id}`, {
+    confirmDelete(id) {
+      this.noteToDelete = id;
+      this.showConfirmModal = true;
+      this.actionInProgress = true;  
+    },
+    confirmDeleteNote() {
+      fetch(`https://post-it.epi-bluelock.bj/notes/${this.noteToDelete}`, {
         method: 'DELETE'
       })
-        .then(() => {
-          this.notes = this.notes.filter(note => note._id !== id);
-        })
-        .catch(error => {
-          console.error('Error deleting note:', error);
-        });
+      .then(() => {
+        this.notes = this.notes.filter(note => note._id !== this.noteToDelete);
+        this.showConfirmModal = false;
+        this.noteToDelete = null;
+        this.actionInProgress = false;  
+      })
+      .catch(error => {
+        console.error('Error deleting note:', error);
+        this.showConfirmModal = false;
+        this.actionInProgress = false;  
+      });
     },
     getRandomBackgroundStyle() {
       const colors = ['bg-yellow-500', 'bg-orange-500', 'bg-green-500', 'bg-gray-500'];

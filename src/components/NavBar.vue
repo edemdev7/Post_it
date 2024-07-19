@@ -9,17 +9,17 @@
     </div>
 
     <!-- Modal pour ajouter un post-it -->
-    <div v-if="showAddModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+    <div v-if="showAddModal" class="fixed inset-0 flex items-center justify-center text-black bg-black bg-opacity-50 z-50 text-dark">
+      <div class=" p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-2xl font-bold mb-4">Ajouter un nouveau Post-it</h2>
         <form @submit.prevent="addNote">
           <div class="mb-4">
-            <label for="title" class="block text-sm font-medium text-gray-700">Titre:</label>
-            <input type="text" v-model="title" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+            <label for="title" class="block text-sm font-medium text-gray-100">Titre:</label>
+            <input placeholder="Enter totre" type="text" v-model="title" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
           </div>
           <div class="mb-4">
-            <label for="content" class="block text-sm font-medium text-gray-700">Contenu:</label>
-            <textarea v-model="content" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+            <label for="content" class="block text-sm font-medium text-gray-100">Contenu:</label>
+            <textarea placeholder="COntent" v-model="content" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
           </div>
           <div class="flex justify-end">
             <button type="button" @click="showAddModal = false" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600 transition-colors">Annuler</button>

@@ -10,12 +10,11 @@
       <div class="bg-gray-800 p-8 w-full max-w-2xl mx-auto rounded-lg shadow-lg">
         <p class="text-gray-100 mb-4">{{ note.content.join(' ') }}</p>
         <button @click="showModal = true" class="bg-yellow-500 text-white px-4 py-2 rounded mr-2 hover:bg-yellow-600 transition-colors">Modifier</button>
-        <button @click="deleteNote" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">Supprimer</button>
       </div>
     </div>
 
     <!-- Modal -->
-    <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div v-if="showModal" class="fixed inset-0 flex items-center justify-center text-black bg-opacity-50">
       <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 class="text-2xl font-bold mb-4">Modifier le Post-it</h2>
         <form @submit.prevent="updateNote">
@@ -64,18 +63,6 @@ export default {
         .catch(error => {
           console.error('Error fetching note:', error);
           this.loading = false;
-        });
-    },
-    deleteNote() {
-      let id = this.$route.params.id;
-      fetch(`https://post-it.epi-bluelock.bj/notes/${id}`, {
-        method: 'DELETE'
-      })
-        .then(() => {
-          this.$router.push('/');
-        })
-        .catch(error => {
-          console.error('Error deleting note:', error);
         });
     },
     updateNote() {
