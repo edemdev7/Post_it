@@ -29,7 +29,7 @@
           title: this.title,
           content: [this.content],
         };
-        fetch('/api/notes', {
+        fetch('https://post-it.epi-bluelock.bj/notes', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

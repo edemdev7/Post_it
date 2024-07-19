@@ -8,7 +8,7 @@
       </div>
       <h1 class="text-3xl font-bold mb-8 text-center text-gray-100">Titre: {{ note.title }}</h1>
       <div class="bg-gray-800 p-8 w-full max-w-2xl mx-auto rounded-lg shadow-lg">
-        <p class="text-gray-100 mb-4">Contenu: {{ note.content.join(' ') }}</p>
+        <p class="text-gray-100 mb-4">{{ note.content.join(' ') }}</p>
         <router-link :to="'/edit/' + note._id" class="bg-yellow-500 text-white px-4 py-2 rounded mr-2 hover:bg-yellow-600 transition-colors">Modifier</router-link>
         <button @click="deleteNote" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors">Supprimer</button>
       </div>
@@ -33,7 +33,7 @@ export default {
   methods: {
     fetchNote() {
       let id = this.$route.params.id;
-      fetch(`http://62.72.5.95:1999/notes/${id}`)
+      fetch(`https://post-it.epi-bluelock.bj/notes/${id}`)
         .then(response => response.json())
         .then(data => {
           this.note = data;
@@ -46,7 +46,7 @@ export default {
     },
     deleteNote() {
       let id = this.$route.params.id;
-      fetch(`/api/notes/${id}`, {
+      fetch(`http://62.72.5.95:1999/notes/${id}`, {
         method: 'DELETE'
       })
         .then(() => {

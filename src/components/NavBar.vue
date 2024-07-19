@@ -10,7 +10,7 @@
     </nav>
   </template>
   
-  <script>
+  <script >
   export default {
     name: 'NavBar'
   };

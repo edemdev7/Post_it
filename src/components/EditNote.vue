@@ -33,7 +33,7 @@ export default {
   methods: {
     fetchNote() {
       let id = this.$route.params.id;
-      fetch(`/api/notes/${id}`)
+      fetch(`https://post-it.epi-bluelock.bj/notes/${id}`)
         .then(response => response.json())
         .then(data => {
           this.note = data;
@@ -42,7 +42,7 @@ export default {
     },
     updateNote() {
       let id = this.$route.params.id;
-      fetch(`http://62.72.5.95:1999/notes/${id}`, {
+      fetch(`https://post-it.epi-bluelock.bj/notes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

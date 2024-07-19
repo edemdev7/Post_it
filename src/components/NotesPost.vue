@@ -6,11 +6,11 @@
       <div v-if="!loading" class="container mx-auto w-screen">
         <h1 class="text-3xl font-bold mb-8 text-center text-gray-100">Liste des Post-it</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto">
-          <div v-for="note in paginatedNotes" :key="note._id" class="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 ">
+          <div v-for="note in paginatedNotes" :key="note._id" class="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 h-42 w-96 ">
             <router-link :to="'/note/' + note._id" class="block text-2xl font-semibold text-blue-600 hover:underline mb-4">
               {{ note.title }}
             </router-link>
-            <p class="text-gray-700">{{ note.content[0] }}</p>
+            <p class="text-gray-700 overflow-hidden">{{ note.content[0] }}</p>
           </div>
         </div>
         <div class="mt-8 text-center">
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     fetchNotes() {
-      fetch('/api/notes')
+      fetch('https://post-it.epi-bluelock.bj/notes')
         .then(response => response.json())
         .then(data => {
           this.notes = data.notes;
