@@ -8,9 +8,9 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto">
           <div v-for="note in paginatedNotes" :key="note._id" class="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 h-42 w-96 ">
             <router-link :to="'/note/' + note._id" class="block text-2xl font-semibold text-blue-600 hover:underline mb-4">
-              {{ note.title }}
+              {{ note.title.slice(0,40)+ "..." }}
             </router-link>
-            <p class="text-gray-700 overflow-hidden">{{ note.content[0] }}</p>
+            <p class="text-gray-700 overflow-hidden">{{ note.content[0].slice(0,180)+ "..." }}</p>
           </div>
         </div>
         <div class="mt-8 text-center">
