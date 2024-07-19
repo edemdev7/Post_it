@@ -6,11 +6,12 @@
       <div v-if="!loading" class="container mx-auto w-screen">
         <h1 class="text-3xl font-bold mb-8 text-center text-gray-100">Liste des Post-it</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-auto">
-          <div v-for="note in paginatedNotes" :key="note._id" class="bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 h-42 w-96 ">
+          <div v-for="note in paginatedNotes" :key="note._id" :style="getRandomBackgroundStyle()" class="  bg-white shadow-lg rounded-lg p-4 transition-transform transform hover:scale-105 h-42 w-96  relative">
             <router-link :to="'/note/' + note._id" class="block text-2xl font-semibold text-blue-600 hover:underline mb-4">
-              {{ note.title.slice(0,40)+ "..." }}
+              {{ note.title.slice(0, 40) + "..." }}
             </router-link>
-            <p class="text-gray-700 overflow-hidden">{{ note.content[0].slice(0,180)+ "..." }}</p>
+            <p class="text-gray-700 overflow-hidden">{{ note.content[0].slice(0, 180) + "..." }}</p>
+            <button @click="deleteNote(note._id)" class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
           </div>
         </div>
         <div class="mt-8 text-center">
@@ -75,6 +76,24 @@ export default {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
+    },
+    deleteNote(id) {
+      fetch(`https://post-it.epi-bluelock.bj/notes/${id}`, {
+        method: 'DELETE'
+      })
+        .then(() => {
+          this.notes = this.notes.filter(note => note._id !== id);
+        })
+        .catch(error => {
+          console.error('Error deleting note:', error);
+        });
+    },
+    getRandomBackgroundStyle() {
+      const colors = ['bg-blue-200', 'bg-orange-200', 'bg-green-200', 'bg-gray-900'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      return {
+        backgroundColor: randomColor
+      };
     }
   },
   components: {
@@ -83,3 +102,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.clip-polygon {
+  clip-path: polygon(100% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+</style>
